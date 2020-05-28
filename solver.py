@@ -58,10 +58,8 @@ def PrintState(table):
 my_table = Table(ReadTable(os.path.join(os.path.dirname(__file__), 'unsolved.csv')))
 PrintState(my_table.numbers)
 #print(my_table.rows[4].numbers)
-for i in range(3):
-    for j in range(3):
-        pass
-        #print(my_table.chunks[i][j].numbers)
+for i in range(9):
+    print(my_table.rows[i].numbers)
 
 """possibles = [[[[], [], [], [], [], [], [], [], []], 
               [[], [], [], [], [], [], [], [], []], 

@@ -8,10 +8,6 @@ class Table:
     filled_o = 81
     filled = 81
     
-    """done_numbs = [[[], [], []], 
-                  [[], [], []], 
-                  [[], [], []]]"""
-    
     rows = []
     columns = []
     chunks = [[0, 0, 0], 
@@ -19,22 +15,15 @@ class Table:
               [0, 0, 0]]
     
     def __init__(self, numbers):
-        for i in range(9):
-            for j in range(9):
-                    self.numbers = numbers
+        self.numbers = numbers
+        
         self.initRows()
+        """for i in range(9):
+            print(self.rows[i].numbers)"""
         self.initColumns()
         self.initChunks()
         
-        for i in range(9):
-            print(self.rows[i].numbers)
-        print(len(self.rows))
     
-    def initRows(self):
-        for i in range(9):
-            self.rows.append(self.Row(i, self.numbers))
-        for i in range(9):
-            self.rows[i] = self.Row(i, self.numbers)
             
     def initColumns(self):
         for i in range(9):
@@ -47,21 +36,27 @@ class Table:
     
     class Row:
         
-        numbers  = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+        #numbers  = [0, 0, 0, 0, 0, 0, 0, 0, 0]
         filled_o = 9
         filled   = 9
         """done     = [0, 0, 0, 0, 0, 0, 0, 0, 0]"""
         
         def __init__(self, row, numbers):
+            self.numbers = []
             for i in range(9):
-                self.numbers[i] = numbers[row][i]
+                self.numbers.append(numbers[row][i])
                 if self.numbers[i] == 0:
                     self.filled_o -= 1
                     self.filled -= 1
                 """else:
                     self.done[i] = self.numbers[i]"""
             
-    
+    def initRows(self):
+        for i in range(9):
+            temp = self.Row(i, self.numbers.copy())
+            self.rows.append(temp)
+            """print(self.rows[i].numbers.copy())"""
+
     class Column:
         
         numbers  = [0, 0, 0, 0, 0, 0, 0, 0, 0]
