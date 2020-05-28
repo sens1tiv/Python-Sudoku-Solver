@@ -7,29 +7,32 @@ import os.path
 
 # Custom libraries
 import tts
+from table import Table
 
 
         # Functions
 def Cls():
     if name == 'nt': 
         _ = system('cls')
-
 Cls()
 
 def ReadTable(path):
     fil = open(path, "r")
-    sud = []
+    sud = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], 
+           [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], 
+           [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]
+          ]
 
     for i in range(9):
         row = fil.readline()
         row = row[:len(row)-1]
         splitted = row.split(';')
 
-        temp = []
+        temp = [0, 0, 0, 0, 0, 0, 0, 0, 0]
         for j in range(9):
-            temp.append(int(splitted[j]))
-        sud.append(temp)
-
+            temp[j] = int(splitted[j])
+        sud[i] = temp
+    
     fil.close()
     return sud
 
@@ -51,47 +54,16 @@ def PrintState(table):
 
     print("")
 
-class Chunk:
-
-    chunk = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    filled_o = 9
-    filled = 9
-    done_numbs = []
-
-    def __init__(self, numbers):
-        for i in range(9):
-            self.chunk[i] = numbers[i]
-            if numbers[i] == 0:
-                self.filled -= 1
-                self.filled_o -= 1
-            else:
-                self.done_numbs.append(numbers[i])
-                self.done_numbs.sort()
-
     # Start of the program
-table = ReadTable(os.path.join(os.path.dirname(__file__), 'unsolved.csv'))
-PrintState(table)
+my_table = Table(ReadTable(os.path.join(os.path.dirname(__file__), 'unsolved.csv')))
+PrintState(my_table.numbers)
+#print(my_table.rows[4].numbers)
+for i in range(3):
+    for j in range(3):
+        pass
+        #print(my_table.chunks[i][j].numbers)
 
-def makeChunkNumber(c_col, c_row):
-    temp = []
-    for i in range(3):
-        for j in range(3):
-            temp.append(table[i + (c_col * 3)][j + (c_row * 3)])
-    return temp
-
-def makeChunks():
-    chunks = [[[], [], []], 
-              [[], [], []], 
-              [[], [], []]]
-    
-    for i in range(3):
-        for j in range(3):
-            chunks[i][j] = Chunk(makeChunkNumber(i, j))
-    return chunks
-
-chunks = makeChunks()
-
-possibles = [[[[], [], [], [], [], [], [], [], []], 
+"""possibles = [[[[], [], [], [], [], [], [], [], []], 
               [[], [], [], [], [], [], [], [], []], 
               [[], [], [], [], [], [], [], [], []]],
              [[[], [], [], [], [], [], [], [], []], 
@@ -99,4 +71,4 @@ possibles = [[[[], [], [], [], [], [], [], [], []],
               [[], [], [], [], [], [], [], [], []]],
              [[[], [], [], [], [], [], [], [], []], 
               [[], [], [], [], [], [], [], [], []], 
-              [[], [], [], [], [], [], [], [], []]]]
+              [[], [], [], [], [], [], [], [], []]]]"""
