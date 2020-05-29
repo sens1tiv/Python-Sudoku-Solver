@@ -53,7 +53,7 @@ def PrintState(table):
             print("===========")
 
     print("")
-    print("\nDone: " + str(my_table.filled) + "/81\n")
+    print("Done: " + str(my_table.filled) + "/81\n")
 
 possibles = [[[], [], [], [], [], [], [], [], []],
              [[], [], [], [], [], [], [], [], []],
@@ -92,7 +92,8 @@ def checkChunk(row, column, number):
 def fillLonelys():
     global possibles
     
-    posses()
+    #posses()
+    rowses()
     
     wasLonely = False
     
@@ -105,7 +106,38 @@ def fillLonelys():
                 
                 if not wasLonely:
                     wasLonely = True
+
+    #print("")
     return wasLonely
+
+def rowses():
+
+    for i in range(3):
+        msg_row = ""
+        for j in range(9):
+            msg_cell = ""
+            for k in range(3):
+                if len(possibles[i][j]) >= 1:
+                    pass
+
+    
+    for i in range(3):
+        msg_row = ""
+        for j in range(9):
+            msg_cell = ""
+            for k in range(len(possibles[i][j])):
+                for l in range(3):
+                    if possibles[i][j][k] == l:
+                        msg_cell += str(l)
+                    else:
+                        msg_cell += "."
+            
+            if j == 2 or j == 6:
+                msg_cell += "|"
+
+            msg_row += msg_cell + " "
+
+        print(msg_row)
                 
 def tryRandom():
     global possibles
@@ -114,7 +146,7 @@ def tryRandom():
     global my_table_c
     my_table_c = my_table
     possibles_c = possibles
-    print("try random")
+    #print("try random")
     
     for i in range(9):
         for j in range(9):
@@ -140,6 +172,20 @@ def removePossibles(x, y, n):
                 del possibles[i][y][k]
                 break
 
+    temp = []
+    cX = (x // 3) * 3
+    cY = (y // 3) * 3
+    for i in range(3):
+        for j in range(3):
+            if len(possibles[cX+i][cY+j]) >= 1:
+                temp.append(possibles[cX+i][cY+j])
+            for k in range(len(possibles[cX+i][cY+j])):
+                if possibles[cX+i][cY+j][k] == n:
+                    del possibles[cX+i][cY+j][k]
+                    break
+
+    #print(str(x+1) + "-" + str(y+1) + ": " + str(n) + str(temp))
+    
 def posses():
     global possibles
     for i in range(0, 9):
@@ -156,12 +202,13 @@ Solve()
 PrintState(my_table.numbers)
 for i in range(10):
     if not fillLonelys():
-        tryRandom()
+        pass
+        #tryRandom()
         break
     PrintState(my_table.numbers)
     
 for i in range(10):
-    if not fillLonelys():
+    if not fillLonelys() and my_table.filled < 81:
         print("is no gud")
         break
     PrintState(my_table.numbers)
